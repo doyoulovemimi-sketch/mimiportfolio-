@@ -1,0 +1,973 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Zhou Yating · Product Design Portfolio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600;1,700&family=Inter:wght@300;400;500;600&family=Noto+Sans+SC:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --blue: #2577ff;
+    --black: #1a1a1a;
+    --bg-light: #FBFBFB;
+    --bg-white: #FFFFFF;
+    --text-40: rgba(26,26,26,0.4);
+    --text-45: rgba(26,26,26,0.45);
+    --text-50: rgba(26,26,26,0.5);
+    --text-65: rgba(26,26,26,0.65);
+    --text-70: rgba(26,26,26,0.7);
+    --text-80: rgba(26,26,26,0.8);
+    --border: rgba(0,0,0,0.1);
+    --border-strong: rgba(0,0,0,0.15);
+    --content-width: 1280px;
+    --side-padding: 109.5px;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Inter', 'Noto Sans SC', -apple-system, sans-serif;
+    color: var(--black);
+    background: var(--bg-light);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    overflow-x: hidden;
+  }
+
+  /* ===== NAV ===== */
+  .nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 64px;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 105px;
+    background: rgba(251,251,251,0.85);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border);
+    transition: background 0.3s;
+  }
+  .nav-logo {
+    font-family: 'Playfair Display', serif;
+    font-weight: 400;
+    font-style: italic;
+    font-size: 16px;
+    color: var(--black);
+    text-decoration: none;
+    letter-spacing: 0.4px;
+  }
+  .nav-links {
+    display: flex;
+    gap: 40px;
+    list-style: none;
+  }
+  .nav-links a {
+    font-size: 13px;
+    font-weight: 400;
+    color: var(--text-70);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--black); }
+  .nav-cta {
+    font-size: 13px;
+    font-weight: 400;
+    color: var(--blue);
+    text-decoration: none;
+    transition: opacity 0.2s;
+  }
+  .nav-cta:hover { opacity: 0.75; }
+
+  /* ===== SECTIONS ===== */
+  .section {
+    padding: 0 var(--side-padding);
+    position: relative;
+  }
+  .section-inner {
+    max-width: var(--content-width);
+    margin: 0 auto;
+  }
+
+  /* ===== SCROLL ANIMATIONS ===== */
+  .fade-up {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1),
+                transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .fade-up.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  .fade-up.delay-1 { transition-delay: 0.1s; }
+  .fade-up.delay-2 { transition-delay: 0.2s; }
+  .fade-up.delay-3 { transition-delay: 0.3s; }
+  .fade-up.delay-4 { transition-delay: 0.4s; }
+
+  /* ===== SECTION LABEL ===== */
+  .section-label {
+    font-family: 'Inter', sans-serif;
+    font-size: 12px;
+    font-weight: 400;
+    letter-spacing: 3.6px;
+    text-transform: uppercase;
+    color: var(--blue);
+    line-height: 18px;
+  }
+  .section-label.large {
+    font-size: 13px;
+    letter-spacing: 3.9px;
+    line-height: 19.5px;
+  }
+
+  /* ===== SECTION HEADER ===== */
+  .section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    padding-bottom: 24px;
+    border-bottom: 1px solid var(--border-strong);
+    margin-bottom: 0;
+  }
+  .section-header .section-heading {
+    font-family: 'Playfair Display', serif;
+    font-weight: 600;
+    font-style: italic;
+    font-size: 64px;
+    line-height: 96px;
+    color: var(--black);
+  }
+  .section-header .section-meta {
+    font-size: 12px;
+    letter-spacing: 3.6px;
+    text-transform: uppercase;
+    color: var(--text-40);
+    line-height: 18px;
+    white-space: nowrap;
+  }
+
+  /* ===== HERO ===== */
+  #hero {
+    background: var(--bg-light);
+    padding-top: 224px; /* 160px + 64px nav */
+    padding-bottom: 128px;
+    min-height: 100vh;
+  }
+  .hero-inner {
+    position: relative;
+  }
+  .hero-title {
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
+    font-size: 132px;
+    line-height: 134.64px;
+    letter-spacing: -3.3px;
+    color: var(--black);
+    margin-top: 40px;
+  }
+  .hero-meta {
+    display: flex;
+    gap: 0;
+    border-top: 1px solid var(--border);
+    margin-top: 272px;
+    padding-top: 33px;
+  }
+  .hero-meta-item {
+    flex: 0 0 auto;
+  }
+  .hero-meta-item:first-child { width: 460px; }
+  .hero-meta-item:nth-child(2) { width: 410px; }
+  .hero-meta-item:last-child { flex: 1; }
+  .hero-meta-label {
+    font-size: 11px;
+    letter-spacing: 2.75px;
+    text-transform: uppercase;
+    color: var(--text-40);
+    line-height: 16.5px;
+    margin-bottom: 8px;
+  }
+  .hero-meta-value {
+    font-family: 'Playfair Display', serif;
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 30px;
+    color: var(--black);
+  }
+
+  /* ===== EDUCATION ===== */
+  #education {
+    background: var(--bg-white);
+    padding-top: 128px;
+    padding-bottom: 105px;
+  }
+  .edu-body {
+    display: flex;
+    gap: 150px;
+    margin-top: 64px;
+  }
+  .edu-left { flex: 0 0 730px; }
+  .edu-right { flex: 0 0 400px; }
+
+  .edu-school-block {
+    padding-top: 32px;
+  }
+  .edu-school-block:first-child {
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 32px;
+  }
+  .edu-school-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+  }
+  .edu-school-name {
+    font-family: 'Playfair Display', serif;
+    font-weight: 600;
+    font-size: 24px;
+    line-height: 36px;
+    color: var(--black);
+  }
+  .edu-school-time {
+    font-size: 12px;
+    line-height: 18px;
+    color: var(--text-45);
+  }
+  .edu-degree {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 21px;
+    color: var(--blue);
+    margin-top: 4px;
+  }
+  .edu-detail {
+    font-size: 14px;
+    line-height: 23.8px;
+    color: var(--text-70);
+    margin-top: 12px;
+  }
+
+  .edu-exp-label {
+    font-size: 12px;
+    letter-spacing: 3.6px;
+    text-transform: uppercase;
+    color: var(--blue);
+    line-height: 18px;
+    margin-top: 64px;
+    margin-bottom: 0;
+  }
+
+  .exp-timeline {
+    margin-top: 24px;
+    position: relative;
+    border-left: 1px solid var(--border);
+    padding-left: 27px;
+  }
+  .exp-item {
+    margin-bottom: 40px;
+    position: relative;
+  }
+  .exp-item:last-child { margin-bottom: 0; }
+  .exp-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+  }
+  .exp-company {
+    font-family: 'Playfair Display', serif;
+    font-weight: 600;
+    font-size: 21px;
+    line-height: 26px;
+    color: var(--black);
+  }
+  .exp-time {
+    font-size: 10px;
+    letter-spacing: 0.5px;
+    line-height: 15px;
+    color: var(--text-45);
+  }
+  .exp-role {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-weight: 400;
+    font-size: 11px;
+    line-height: 17px;
+    color: var(--blue);
+    margin-top: 6px;
+  }
+  .exp-desc {
+    font-size: 11px;
+    line-height: 20px;
+    color: var(--text-70);
+    margin-top: 8px;
+    max-width: 660px;
+  }
+
+  /* Skills card */
+  .skills-card {
+    background: var(--bg-light);
+    padding: 40px;
+    height: 100%;
+  }
+  .skills-card .section-label {
+    margin-bottom: 24px;
+  }
+  .skill-group {
+    padding: 16px 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .skill-group:last-child { border-bottom: none; }
+  .skill-group-title {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 27px;
+    color: var(--black);
+    margin-bottom: 8px;
+  }
+  .skill-group-items {
+    font-size: 13px;
+    line-height: 22.1px;
+    color: var(--text-65);
+  }
+
+  /* ===== ABOUT ===== */
+  #about {
+    background: var(--bg-light);
+    padding-top: 128px;
+    padding-bottom: 128px;
+  }
+  .about-body {
+    display: flex;
+    position: relative;
+  }
+  .about-left {
+    flex: 0 0 400px;
+  }
+  .about-right {
+    flex: 1;
+    margin-left: 150px;
+  }
+  .about-heading {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-weight: 400;
+    font-size: 72px;
+    line-height: 75.6px;
+    color: var(--black);
+    margin-top: 24px;
+  }
+  .about-heading strong {
+    font-weight: 600;
+    font-style: normal;
+  }
+  .about-text {
+    font-size: 18px;
+    line-height: 32.4px;
+    color: var(--text-80);
+  }
+  .about-text .highlight { color: var(--blue); }
+  .about-text + .about-text { margin-top: 24px; }
+
+  .about-stats {
+    display: flex;
+    border-top: 1px solid var(--border);
+    margin-top: 56px;
+    padding-top: 41px;
+    gap: 0;
+  }
+  .stat-item { flex: 0 0 33.33%; }
+  .stat-number {
+    font-family: 'Playfair Display', serif;
+    font-weight: 600;
+    font-size: 44px;
+    line-height: 44px;
+    color: var(--black);
+  }
+  .stat-label {
+    font-size: 12px;
+    letter-spacing: 1.8px;
+    text-transform: uppercase;
+    color: var(--text-50);
+    line-height: 18px;
+    margin-top: 12px;
+  }
+
+  /* ===== PROJECTS ===== */
+  #projects {
+    background: var(--bg-white);
+    padding-top: 128px;
+    padding-bottom: 128px;
+  }
+  .projects-grid {
+    margin-top: 80px;
+    display: flex;
+    flex-direction: column;
+    gap: 112px;
+  }
+  .project-row {
+    display: flex;
+    gap: 27px;
+    align-items: stretch;
+  }
+  .project-row.gap-28 { gap: 28px; }
+  .project-row.gap-35 { gap: 35px; }
+
+  /* Card structure */
+  .project-card {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    overflow: hidden;
+  }
+  /* Width variants */
+  .card-w730 { flex: 0 0 730px; max-width: 730px; }
+  .card-w523 { flex: 0 0 523px; max-width: 523px; }
+  .card-w759 { flex: 0 0 759px; max-width: 759px; }
+  .card-w486 { flex: 0 0 486px; max-width: 486px; }
+  .card-full { flex: 1 1 100%; }
+
+  /* Image area */
+  .card-image {
+    width: 100%;
+    background: var(--bg-light);
+    overflow: hidden;
+    position: relative;
+  }
+  .card-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+  .card-image-placeholder {
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, #f0f0f0 0%, #e8e8e8 50%, #f0f0f0 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+    color: var(--text-40);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+  }
+  .card-image.h552 { height: 552px; }
+  .card-image.h545 { height: 545px; }
+  .card-image.h547 { height: 547.5px; }
+
+  /* Text area */
+  .card-text {
+    position: relative;
+    padding: 0;
+    min-height: 192px;
+  }
+  .card-tag {
+    font-family: 'Inter', sans-serif;
+    font-size: 11px;
+    font-weight: 400;
+    letter-spacing: 2.75px;
+    text-transform: uppercase;
+    color: var(--blue);
+    line-height: 16.5px;
+  }
+  .card-title {
+    font-family: 'Playfair Display', serif;
+    font-weight: 600;
+    font-size: 28px;
+    line-height: 32.2px;
+    color: var(--black);
+    margin-top: 8px;
+  }
+  .card-subtitle {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 21px;
+    color: var(--text-40);
+    margin-top: 4px;
+  }
+  .card-desc {
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    line-height: 23.8px;
+    color: var(--text-70);
+    margin-top: 13px;
+    max-width: 480px;
+  }
+  .card-result {
+    font-family: 'Inter', sans-serif;
+    font-size: 12px;
+    line-height: 18px;
+    letter-spacing: 0.3px;
+    color: var(--text-50);
+    border-top: 1px solid var(--border);
+    padding-top: 13px;
+    margin-top: auto;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+  }
+
+  /* ===== CONTACT ===== */
+  #contact {
+    background: var(--bg-light);
+    padding-top: 160px;
+    padding-bottom: 100px;
+  }
+  .contact-heading {
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
+    font-size: 150px;
+    line-height: 142.4px;
+    letter-spacing: -3.75px;
+    color: var(--black);
+    margin-top: 58px;
+  }
+  .contact-heading em {
+    font-style: italic;
+    font-weight: 400;
+  }
+  .contact-info {
+    display: flex;
+    border-top: 1px solid var(--border);
+    margin-top: 80px;
+    padding-top: 41px;
+  }
+  .contact-item {
+    flex: 0 0 33.33%;
+  }
+  .contact-label {
+    font-size: 11px;
+    letter-spacing: 2.75px;
+    text-transform: uppercase;
+    color: var(--text-40);
+    line-height: 16.5px;
+    margin-bottom: 12px;
+  }
+  .contact-value {
+    font-family: 'Playfair Display', serif;
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 30px;
+    color: var(--black);
+  }
+  .contact-value a {
+    color: var(--black);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .contact-value a:hover { color: var(--blue); }
+
+  .footer {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 96px;
+    font-size: 12px;
+    line-height: 18px;
+    color: var(--text-40);
+  }
+  .footer-right {
+    letter-spacing: 3.6px;
+    text-transform: uppercase;
+  }
+
+  /* ===== RESPONSIVE ===== */
+  @media (max-width: 1500px) {
+    :root {
+      --side-padding: 60px;
+    }
+  }
+  @media (max-width: 1200px) {
+    :root {
+      --side-padding: 40px;
+    }
+    .hero-title { font-size: 90px; line-height: 96px; letter-spacing: -2px; }
+    .contact-heading { font-size: 100px; line-height: 100px; }
+    .section-header .section-heading { font-size: 48px; line-height: 72px; }
+    .about-heading { font-size: 56px; line-height: 60px; }
+    .edu-body { gap: 60px; }
+    .edu-left { flex: 1; }
+    .edu-right { flex: 0 0 340px; }
+    .about-left { flex: 0 0 300px; }
+    .about-right { margin-left: 80px; }
+    .hero-meta { margin-top: 160px; }
+    .hero-meta-item:first-child { width: 35%; }
+    .hero-meta-item:nth-child(2) { width: 30%; }
+    .card-w730, .card-w523, .card-w759, .card-w486 { flex: 1 1 0; max-width: none; }
+    .card-image.h552, .card-image.h545, .card-image.h547 { height: 420px; }
+  }
+  @media (max-width: 900px) {
+    :root { --side-padding: 24px; }
+    .nav { padding: 0 24px; }
+    .nav-cta { display: none; }
+    .hero-title { font-size: 56px; line-height: 60px; letter-spacing: -1px; }
+    .hero-meta { flex-direction: column; gap: 24px; margin-top: 80px; }
+    .hero-meta-item, .hero-meta-item:first-child, .hero-meta-item:nth-child(2) { width: 100%; }
+    .section-header .section-heading { font-size: 36px; line-height: 48px; }
+    .section-header { flex-direction: column; align-items: flex-start; gap: 8px; }
+    .about-heading { font-size: 40px; line-height: 44px; }
+    .about-body { flex-direction: column; }
+    .about-right { margin-left: 0; margin-top: 40px; }
+    .about-text { font-size: 16px; line-height: 28px; }
+    .edu-body { flex-direction: column; gap: 40px; }
+    .edu-left { flex: 1 1 auto; }
+    .edu-right { flex: 1 1 auto; }
+    .contact-heading { font-size: 56px; line-height: 60px; }
+    .contact-info { flex-direction: column; gap: 32px; }
+    .project-row { flex-direction: column; }
+    .card-w730, .card-w523, .card-w759, .card-w486, .card-full { flex: 1 1 100%; max-width: 100%; }
+    .card-image.h552, .card-image.h545, .card-image.h547 { height: 300px; }
+    .stat-number { font-size: 32px; line-height: 32px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav">
+  <a href="#hero" class="nav-logo">Yating Zhou</a>
+  <ul class="nav-links">
+    <li><a href="#education">Background</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#projects">Selected Work</a></li>
+  </ul>
+  <a href="#contact" class="nav-cta">Get in touch &rarr;</a>
+</nav>
+
+<!-- HERO -->
+<section id="hero" class="section">
+  <div class="section-inner hero-inner">
+    <div class="section-label large fade-up">Portfolio · 2026</div>
+    <h1 class="hero-title fade-up delay-1">Product Designing<br>Portfolio.</h1>
+    <div class="hero-meta fade-up delay-2">
+      <div class="hero-meta-item">
+        <div class="hero-meta-label">Formerly</div>
+        <div class="hero-meta-value">北航工业设计硕士｜小米产品经理</div>
+      </div>
+      <div class="hero-meta-item">
+        <div class="hero-meta-label">Based in</div>
+        <div class="hero-meta-value">北京，中国</div>
+      </div>
+      <div class="hero-meta-item">
+        <div class="hero-meta-label">Focus</div>
+        <div class="hero-meta-value">产品规划，用户体验，项目管理</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EDUCATION -->
+<section id="education" class="section">
+  <div class="section-inner">
+    <div class="section-header fade-up">
+      <h2 class="section-heading">Education & Experience</h2>
+      <span class="section-meta">01 · Background</span>
+    </div>
+
+    <div class="edu-body">
+      <!-- Left: Schools + Experience -->
+      <div class="edu-left">
+        <!-- School 1 -->
+        <div class="edu-school-block fade-up delay-1">
+          <div class="edu-school-header">
+            <span class="edu-school-name">Beihang University · 北京航空航天大学</span>
+            <span class="edu-school-time">2022.09 — 2025.07</span>
+          </div>
+          <div class="edu-degree">M.Eng., Industrial Design</div>
+          <div class="edu-detail">研究方向：设计管理、数据可视化。一作发表北大核心期刊《包装工程》。A'Design 国际设计奖银奖。</div>
+        </div>
+
+        <!-- School 2 -->
+        <div class="edu-school-block fade-up delay-2">
+          <div class="edu-school-header">
+            <span class="edu-school-name">Yunnan Normal University · 云南师范大学</span>
+            <span class="edu-school-time">2018.09 — 2022.07</span>
+          </div>
+          <div class="edu-degree">B.Sc., Mathematics & Applied Mathematics</div>
+          <div class="edu-detail">全国大学生数学建模竞赛省级一等奖 · 英语六级 570。</div>
+        </div>
+
+        <!-- Experience -->
+        <div class="edu-exp-label fade-up">Experience</div>
+        <div class="exp-timeline fade-up delay-1">
+          <div class="exp-item">
+            <div class="exp-header">
+              <span class="exp-company">Xiaomi Inc. · 小米集团</span>
+              <span class="exp-time">2024.12 — Present</span>
+            </div>
+            <div class="exp-role">产品经理 Product Manager — Tech Committee, XiaoAI</div>
+            <div class="exp-desc">负责超级小爱和 MiClaw 的 C 端交互层。主导 MiClaw 结果卡体系、OS4 服务直达小部件、小爱建议升级与小爱记忆等多个核心项目。</div>
+          </div>
+          <div class="exp-item">
+            <div class="exp-header">
+              <span class="exp-company">Beijing Weiji Technology · 唯极科技（尚象设计）</span>
+              <span class="exp-time">2022.09 — 2024.06</span>
+            </div>
+            <div class="exp-role">产品设计实习生 Product Design Intern</div>
+            <div class="exp-desc">全球 TOP50 创新设计咨询团队，参与 11 个落地产品项目。包括氢致氢能源品牌全案设计、AI 骨髓细胞形态学检测系统等。</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right: Skills Card -->
+      <div class="edu-right fade-up delay-2">
+        <div class="skills-card">
+          <div class="section-label">Skill</div>
+          <div class="skill-group">
+            <div class="skill-group-title">Product</div>
+            <div class="skill-group-items">用户调研 · 需求分析 · PRD 撰写 · 交互设计 · 竞品分析 · 数据分析 · 项目管理</div>
+          </div>
+          <div class="skill-group">
+            <div class="skill-group-title">Design</div>
+            <div class="skill-group-items">Figma · UI 设计 · 信息架构 · 原型设计 · 品牌设计</div>
+          </div>
+          <div class="skill-group">
+            <div class="skill-group-title">Tech</div>
+            <div class="skill-group-items">Vibe Coding · demo验证技术方案可落地</div>
+          </div>
+          <div class="skill-group">
+            <div class="skill-group-title">Language</div>
+            <div class="skill-group-items">英语 CET-6 570 · 普通话</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about" class="section">
+  <div class="section-inner">
+    <div class="about-body">
+      <div class="about-left">
+        <div class="section-label fade-up">02 · About</div>
+        <h2 class="about-heading fade-up delay-1">Logic <strong>meets</strong><br>empathy<strong>.</strong></h2>
+      </div>
+      <div class="about-right">
+        <p class="about-text fade-up delay-1">数学本科 + 工业设计硕士的跨学科背景，让我同时具备<span class="highlight">数据逻辑</span>与<span class="highlight">用户体验</span>敏感度。在小米的 1.5 年里，我独立负责多条用户级产品线，从 0 到 1 定义到全量上线，覆盖千万级用户。</p>
+        <p class="about-text fade-up delay-2">擅长通过用户调研驱动产品决策，在商业化目标与用户体验之间找到平衡。具备产品经理 + 设计师双重视角，能独立输出高质量 PRD、交互方案与 UI 规范。</p>
+
+        <div class="about-stats fade-up delay-3">
+          <div class="stat-item">
+            <div class="stat-number">1.5y</div>
+            <div class="stat-label">Xiaomi PM</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-number">20+</div>
+            <div class="stat-label">PRDs written</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-number">10M+</div>
+            <div class="stat-label">Users reached</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects" class="section">
+  <div class="section-inner">
+    <div class="section-header fade-up">
+      <h2 class="section-heading">Selected Work</h2>
+      <span class="section-meta">2022 — 2026 · Eight projects</span>
+    </div>
+
+    <div class="projects-grid">
+
+      <!-- Row 1: MiClaw (730) + OS4 Widget (523) -->
+      <div class="project-row fade-up">
+        <!-- Card 1: MiClaw -->
+        <div class="project-card card-w730">
+          <div class="card-image h545">
+            <img src="images/MiClaw 结果卡体系.png" alt="MiClaw 结果卡体系" loading="lazy">
+          </div>
+          <div class="card-text">
+            <div class="card-tag">AI Agent · Interaction System</div>
+            <h3 class="card-title">MiClaw 结果卡体系</h3>
+            <div class="card-subtitle">MiClaw Result Card System</div>
+            <p class="card-desc">系统级 AI Agent 的 C 端核心交互层。独立定义 38 种结果卡的分类体系、视觉规范与交互行为，覆盖信息/操作/内容/服务 4 大品类。</p>
+            <div class="card-result">4/20 公测 · 6/20 OS4 全量上线 · 千万级用户</div>
+          </div>
+        </div>
+        <!-- Card 2: OS4 Widget -->
+        <div class="project-card card-w523">
+          <div class="card-image h545">
+            <img src="images/超级小爱服务直达小部件.png" alt="超级小爱服务直达小部件" loading="lazy">
+          </div>
+          <div class="card-text">
+            <div class="card-tag">AI Service · Multi-device</div>
+            <h3 class="card-title">超级小爱服务直达小部件</h3>
+            <div class="card-subtitle">Super Xiaoai Service Widgets</div>
+            <p class="card-desc">手机桌面 AI 服务入口，用户一句话创建个性化服务快捷方式，覆盖手机 + Pad 双端。定义 3 条创建路径、管理页、小部件中心与编辑删除全流程交互。</p>
+            <div class="card-result">通过评审 · 作为 OS4 核心功能全量上线</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Row 2: 小爱建议 (523) + 小爱记忆 (730) -->
+      <div class="project-row gap-28 fade-up">
+        <!-- Card 3: 小爱建议 -->
+        <div class="project-card card-w523">
+          <div class="card-image h552">
+            <img src="images/小爱建议 交互框架升级.png" alt="小爱建议交互框架升级" loading="lazy">
+          </div>
+          <div class="card-text">
+            <div class="card-tag">Research · Framework</div>
+            <h3 class="card-title">小爱建议 交互框架升级</h3>
+            <div class="card-subtitle">XiaoAI Suggestion Framework</div>
+            <p class="card-desc">发起 34 人用户深度访谈，定位 TOP 痛点。设计应用推荐开关 + 框架扩展 + 兜底策略，平衡商业化与用户体验。</p>
+            <div class="card-result">方案兼顾商业化与体验，目标降低20%负面反馈</div>
+          </div>
+        </div>
+        <!-- Card 4: 小爱记忆 -->
+        <div class="project-card card-w730">
+          <div class="card-image h552">
+            <img src="images/小爱记忆 · 生活服务码上岛.png" alt="小爱记忆 · 生活服务码上岛" loading="lazy">
+          </div>
+          <div class="card-text">
+            <div class="card-tag">Context-aware Recommendation</div>
+            <h3 class="card-title">小爱记忆 · 生活服务码上岛</h3>
+            <div class="card-subtitle">XiaoAI Memory · Code-on-Island</div>
+            <p class="card-desc">洞察取餐 / 排队 / 快递 / 取件等高频场景，设计 4 种码全生命周期与主动推荐策略。通过 Vibe Coding 独立完成可行性验证。</p>
+            <div class="card-result">完整 PRD 通过评审 · 进入开发</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Row 3: 唤醒引导 (759) + 高通骁龙 (486) -->
+      <div class="project-row gap-35 fade-up">
+        <!-- Card 5: 唤醒引导 -->
+        <div class="project-card card-w759">
+          <div class="card-image h545">
+            <img src="images/唤醒引导场景推荐.png" alt="唤醒引导 场景推荐" loading="lazy">
+          </div>
+          <div class="card-text">
+            <div class="card-tag">Recommendation · Privacy</div>
+            <h3 class="card-title">唤醒引导 场景推荐</h3>
+            <div class="card-subtitle">Context-aware Discovery</div>
+            <p class="card-desc">梳理 300+ 使用场景并运营上线，明星场景采纳率 81.3%。主导隐私合规方案，协调法务 / 市场 / 业务方多部门诉求。</p>
+            <div class="card-result">OS3 发布会亮相 · 行业领先</div>
+          </div>
+        </div>
+        <!-- Card 6: 高通骁龙 -->
+        <div class="project-card card-w486">
+          <div class="card-image h547">
+            <img src="images/高通峰会AIdemo.png" alt="高通骁龙峰会 AI Demo" loading="lazy">
+          </div>
+          <div class="card-text">
+            <div class="card-tag">Product Storytelling</div>
+            <h3 class="card-title">高通骁龙峰会 AI Demo</h3>
+            <div class="card-subtitle">Snapdragon Summit AI Demo</div>
+            <p class="card-desc">小米在高通年度峰会上的 AI 能力展示 Demo——面向行业与媒体的产品发布级展示。提炼小米 AI 核心卖点，把控现场体验质量。</p>
+            <div class="card-result">骁龙峰会成功展示</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Row 4: AI骨髓 (full width) -->
+      <div class="project-row fade-up">
+        <div class="project-card card-full">
+          <div class="card-image h547">
+            <img src="images/AI骨髓细胞形态学检测系统.png" alt="AI 骨髓细胞形态学检测系统" loading="lazy">
+          </div>
+          <div class="card-text">
+            <div class="card-tag">Medical AI · Graduation Project</div>
+            <h3 class="card-title">AI 骨髓细胞形态学检测系统</h3>
+            <div class="card-subtitle">AI Bone Marrow Cell Morphology</div>
+            <p class="card-desc">独立主导 0→1 全流程：7 位医学专家深访 → 13 款竞品分析 → 交互 + UI 设计。深度挖掘医生工作流痛点。</p>
+            <div class="card-result">AI 识别准确率 96%+ · 投入北京协和医院临床</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact" class="section">
+  <div class="section-inner">
+    <div class="section-label fade-up">05 · Get in touch</div>
+    <h2 class="contact-heading fade-up delay-1">Let's build<br>something <em>good</em>.</h2>
+
+    <div class="contact-info fade-up delay-2">
+      <div class="contact-item">
+        <div class="contact-label">Email</div>
+        <div class="contact-value"><a href="mailto:mimiandlili@foxmail.com">mimiandlili@foxmail.com</a></div>
+      </div>
+      <div class="contact-item">
+        <div class="contact-label">Phone</div>
+        <div class="contact-value">+86 158 8710 7640</div>
+      </div>
+      <div class="contact-item">
+        <div class="contact-label">Location</div>
+        <div class="contact-value">Beijing · 北京</div>
+      </div>
+    </div>
+
+    <div class="footer fade-up delay-3">
+      <span>&copy; 2026 Zhou Yating · Portfolio</span>
+      <span class="footer-right">Designed with care · Beijing</span>
+    </div>
+  </div>
+</section>
+
+<script>
+// Scroll-triggered fade-in animations
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+    }
+  });
+}, {
+  threshold: 0.08,
+  rootMargin: '0px 0px -60px 0px'
+});
+
+document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+
+// Nav background on scroll
+const nav = document.querySelector('.nav');
+let lastScroll = 0;
+window.addEventListener('scroll', () => {
+  const y = window.scrollY;
+  if (y > 100) {
+    nav.style.background = 'rgba(251,251,251,0.95)';
+  } else {
+    nav.style.background = 'rgba(251,251,251,0.85)';
+  }
+  lastScroll = y;
+}, { passive: true });
+
+// Smooth scroll for nav links
+document.querySelectorAll('.nav-links a').forEach(link => {
+  link.addEventListener('click', e => {
+    e.preventDefault();
+    const target = document.querySelector(link.getAttribute('href'));
+    if (target) {
+      target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  });
+});
+</script>
+
+</body>
+</html>
